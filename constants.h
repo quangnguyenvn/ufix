@@ -1,0 +1,71 @@
+namespace ufix {
+
+#define LIB_VERSION "1.1"
+
+/* Versions descriptions
+1.0: First testing release
+1.1: Improve library api for Group get_field
+*/
+
+#define SOCKET_NULL 0
+
+#define QUEUE_SESSION 0
+
+#define SENT_MARK_SIZE 1 << 20
+#define WINDOW_QUEUE_RR_SIZE 256
+
+#define SOCKET_RECV_WINDOWS (1 << 16)
+
+#define SOCKET_RECV_BUF_SIZE (1 << 24)
+#define SOCKET_SEND_BUF_SIZE (1 << 24)
+
+#define CMD_BLOCK_SIZE 32
+
+#define TR_THRESHOLD 1.2
+#define DISCONNECT_THRESHOLD 2.4
+
+#define MAX_FIX_TAG (1 << 15)
+#define SOH 1
+#define EQUAL '='
+#define SEQ_PATTERN "34="
+#define SEQ_PATTERN_LENGTH 3
+#define SENDING_TIME_PATTERN "52="
+#define SENDING_TIME_PATTERN_LENGTH 3
+
+#define MSG_TYPE_HEARTBEAT "0"
+#define MSG_TYPE_TEST_REQUEST "1"
+#define MSG_TYPE_RESEND_REQUEST "2"
+#define MSG_TYPE_REJECT "3"
+#define MSG_TYPE_SEQUENCE_RESET "4"
+#define MSG_TYPE_LOGOUT "5"
+#define MSG_TYPE_LOGON "A"
+#define MSG_TYPE_XML_NON_FIX "n"
+#define MSG_TYPE_GF "GF"
+
+#define CHECKSUM_TAG_PART_SIZE 3
+#define CHECKSUM_VALUE_PART_SIZE 4
+#define CHECKSUM_SIZE (CHECKSUM_TAG_PART_SIZE + CHECKSUM_VALUE_PART_SIZE)
+
+#define SENDING_TIME_SIZE 21
+#define DISTANCE_SENDING_ORIG_SENDING (SENDING_TIME_SIZE + 5)
+
+#define BEGIN_STRING 8
+#define BODY_LENGTH 9
+#define MSG_TYPE 35
+#define SENDER_COMP_ID 49
+#define TARGET_COMP_ID 56
+#define MSG_SEQ_NUM 34
+#define SENDING_TIME 52
+#define ORIG_SENDING_TIME 122
+#define POS_DUP_FLAG 43
+#define ENCRYPT_METHOD 98
+#define HEART_BT_IN 108
+#define DEFAULT_APPL_VER_ID 1137
+#define CHECKSUM 10
+#define BEGIN_SEQ_NO 7
+#define END_SEQ_NO 16
+#define ENCRYPT_METHOD_NONE 0
+#define TEST_REQUEST_ID 112
+#define GAP_FILL_FLAG 123
+#define NEW_SEQ_NO 36
+}
