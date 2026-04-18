@@ -7,8 +7,33 @@
 
 namespace ufix {
 
+  inline const char * get_file_name(const char * path) {
+#ifdef _WINDOWS_OS_
+    const char * p1 = strrchr(path, '\\');
+    const char * p2 = strrchr(path, '/');
+    const char * p = p1;
+    if (p2 != NULL && (p == NULL || p2 > p)) p = p2;
+    return (p == NULL)?path:(p + 1);
+#else
+    return basename((char *) path);
+#endif
+  }
+
+  inline void get_abs_path(const char * path, char * out, int out_size) {
+#ifdef _WINDOWS_OS_
+    if (_fullpath(out, path, out_size) == NULL) {
+      int len = str_size(path);
+      if (len >= out_size) len = out_size - 1;
+      memcpy(out, path, len);
+      out[len] = '\0';
+    }
+#else
+    realpath(path, out);
+#endif
+  }
+
   inline int move_file(const char * src, const char * dir) {
-    const char * file_name = basename(src);
+    const char * file_name = get_file_name(src);
     char buf[512];
     sprintf(buf, "%s%c%s", dir, DIR_DELIM, file_name);
     
@@ -93,7 +118,7 @@ namespace ufix {
     dir_create(b_dir);
     
     char b_dir_abs_path[512];    
-    realpath(b_dir, b_dir_abs_path);
+    get_abs_path(b_dir, b_dir_abs_path, 512);
 
     int code;
     code = move_file(seqs_processed, b_dir_abs_path);
@@ -103,7 +128,7 @@ namespace ufix {
     if (!code) return 0;
 
     char q_dir_abs_path[512];
-    realpath(q_dir, q_dir_abs_path);
+    get_abs_path(q_dir, q_dir_abs_path, 512);
     
     code = move_file(q_dir_abs_path, b_dir_abs_path);
     if (!code) return 0;

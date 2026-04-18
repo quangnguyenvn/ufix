@@ -124,6 +124,7 @@ inline void print_stack_trace() {
 #include <ws2tcpip.h>
 #include <windows.h>	
 #include <process.h>
+#include <direct.h>
 
 #define EAGAIN WSAEWOULDBLOCK
 #define EWOULDBLOCK WSAEWOULDBLOCK
@@ -169,7 +170,7 @@ inline void print_stack_trace() {
 #define socket_send(x, y, z) send(x, y, z, 0)
 #define socket_close(x) closesocket(x)
 
-#define mkdir(x, y) CreateDirectory(x, NULL)
+#define mkdir(x, y) _mkdir(x)
 #define DIR_DELIM '\\'
 #define poll WSAPoll
 

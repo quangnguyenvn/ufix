@@ -65,8 +65,8 @@ namespace ufix {
     char * params_buf = (char *) params;
     socket_handle sock = *((int *) params_buf);
     params_buf +=  sizeof(socket_handle);
-    Logger * logger = (Logger *) params_buf;
-    params_buf += sizeof(Logger);
+    Logger * logger = *((Logger **) params_buf);
+    params_buf += sizeof(Logger *);
     int num_sessions = *((int *) params_buf);
     params_buf += sizeof(int);
     SessionPtr * sessions = (SessionPtr *) params_buf; 
@@ -232,13 +232,13 @@ namespace ufix {
 	      inet_ntoa(socket_client_addr.sin_addr), ntohs(socket_client_addr.sin_port));
       s_logger->info(buf);
       
-      int params_size = sizeof(socket_client) + sizeof(Logger) + sizeof(int) + num_sessions*sizeof(SessionPtr);
+      int params_size = sizeof(socket_client) + sizeof(Logger *) + sizeof(int) + num_sessions*sizeof(SessionPtr);
       char * params = (char *) mem_alloc("Init params size of socket client", params_size);
       int pos = 0;
       memcpy(params + pos, (char *) (&socket_client), sizeof(socket_client));
       pos += sizeof(socket_client);
-      memcpy(params + pos, (char *) s_logger, sizeof(Logger));
-      pos += sizeof(Logger);
+      memcpy(params + pos, (char *) (&s_logger), sizeof(Logger *));
+      pos += sizeof(Logger *);
       memcpy(params + pos, (char *) (&num_sessions), sizeof(int));
       pos += sizeof(int);
       memcpy(params + pos, (char *) (sessions), num_sessions*sizeof(SessionPtr));

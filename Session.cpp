@@ -37,6 +37,7 @@ namespace ufix {
     
     s_opt = (SessionOption *) mem_alloc("Init session option", sizeof(SessionOption));
     memcpy(s_opt, opt, sizeof(SessionOption));
+    status_flag = STATUS_READY;
 
     pthread_mutex_init(&state_mutex, NULL);
     
